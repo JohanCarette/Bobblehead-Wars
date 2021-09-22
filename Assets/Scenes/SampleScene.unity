@@ -1656,6 +1656,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 50
   head: {fileID: 138001165}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!1 &1987587843 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 317866145479c0e43adf536271a8adc5,
