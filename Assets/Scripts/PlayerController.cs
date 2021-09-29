@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 currentLookTarget = Vector3.zero;
     private CharacterController characterController;
 
-
-    // Start is called before the first frame update
+    // Use this for initialization
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -35,7 +34,6 @@ public class PlayerController : MonoBehaviour
         {
             head.AddForce(transform.right * 150, ForceMode.Acceleration);
         }
-
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, ray.direction * 1000, Color.green);
@@ -47,13 +45,9 @@ public class PlayerController : MonoBehaviour
                 currentLookTarget = hit.point;
             }
         }
-        // 1
         Vector3 targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-        // 2
         Quaternion rotation = Quaternion.LookRotation(targetPosition - transform.position);
-        // 3
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10.0f);
-        
-
     }
+
 }
