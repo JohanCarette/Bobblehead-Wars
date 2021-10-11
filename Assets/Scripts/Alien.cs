@@ -1,3 +1,98 @@
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using UnityEngine.AI;
+//using UnityEngine.Events;
+
+//public class Alien : MonoBehaviour
+//{
+//    public Transform target;
+//    public float navigationUpdate;
+//    public UnityEvent OnDestroy;
+//    //public void Die()
+//    //{
+//    //    OnDestroy.Invoke();
+//    //    OnDestroy.RemoveAllListeners();
+//    //    Destroy(gameObject);
+//    //}
+//    public void Die()
+//    {
+//        isAlive = false;
+//        head.GetComponent<Animator>().enabled = false;
+//        head.isKinematic = false;
+//        head.useGravity = true;
+//        head.GetComponent<SphereCollider>().enabled = true;
+//        head.gameObject.transform.parent = null;
+//        head.velocity = new Vector3(0, 26.0f, 3.0f);
+
+//        OnDestroy.Invoke();
+//        OnDestroy.RemoveAllListeners();
+//        SoundManager.Instance.PlayOneShot(SoundManager.Instance.alienDeath);
+//        head.GetComponent<SelfDestruct>().Initiate();
+//        if (deathParticles)
+//        {
+//            deathParticles.transform.parent = null;
+//            deathParticles.Activate();
+//        }
+//        Destroy(gameObject);
+//    }
+//    public Rigidbody head;
+//    public bool isAlive = true;
+
+//    //public DeathParticles GetDeathParticles()
+//    //{
+//    //    if (deathParticles == null)
+//    //    {
+//    //        deathParticles = GetComponentInChildren<DeathParticles>();
+//    //    }
+//    //    return deathParticles;
+//    //}
+
+//    private float navigationTime = 0;
+//    private NavMeshAgent agent;
+//    private DeathParticles deathParticles;
+
+//    // Start is called before the first frame update
+//    void Start()
+//    {
+//        agent = GetComponent<NavMeshAgent>();
+//    }
+
+//    // Update is called once per frame
+//    void Update()
+//    {
+//        if (isAlive)
+//        {
+//            Die();
+//            SoundManager.Instance.PlayOneShot(SoundManager.Instance.alienDeath);
+
+
+//            if (target != null)
+//            {
+//                navigationTime += Time.deltaTime;
+//                if (navigationTime > navigationUpdate)
+//                {
+//                    agent.destination = target.position;
+//                    navigationTime = 0;
+//                }
+//            }
+//        }
+//    }
+//    void OnTriggerEnter(Collider other)
+//    {
+//        if (isAlive)
+//        {
+//            Die();
+//            SoundManager.Instance.PlayOneShot(SoundManager.Instance.alienDeath);
+//        }
+//    }
+
+//}
+
+
+
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,38 +101,17 @@ using UnityEngine.Events;
 
 public class Alien : MonoBehaviour
 {
+
     public Transform target;
     public float navigationUpdate;
     public UnityEvent OnDestroy;
-    //public void Die()
-    //{
-    //    OnDestroy.Invoke();
-    //    OnDestroy.RemoveAllListeners();
-    //    Destroy(gameObject);
-    //}
-    public void Die()
-    {
-        isAlive = false;
-        head.GetComponent<Animator>().enabled = false;
-        head.isKinematic = false;
-        head.useGravity = true;
-        head.GetComponent<SphereCollider>().enabled = true;
-        head.gameObject.transform.parent = null;
-        head.velocity = new Vector3(0, 26.0f, 3.0f);
-
-        OnDestroy.Invoke();
-        OnDestroy.RemoveAllListeners();
-        SoundManager.Instance.PlayOneShot(SoundManager.Instance.alienDeath);
-        head.GetComponent<SelfDestruct>().Initiate();
-        Destroy(gameObject);
-    }
     public Rigidbody head;
     public bool isAlive = true;
-
     private float navigationTime = 0;
     private NavMeshAgent agent;
+    private DeathParticles deathParticles;
 
-    // Start is called before the first frame update
+    // Use this for initialization
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -48,10 +122,6 @@ public class Alien : MonoBehaviour
     {
         if (isAlive)
         {
-            Die();
-            SoundManager.Instance.PlayOneShot(SoundManager.Instance.alienDeath);
-
-
             if (target != null)
             {
                 navigationTime += Time.deltaTime;
@@ -62,7 +132,9 @@ public class Alien : MonoBehaviour
                 }
             }
         }
+
     }
+
     void OnTriggerEnter(Collider other)
     {
         if (isAlive)
@@ -72,4 +144,43 @@ public class Alien : MonoBehaviour
         }
     }
 
+    public void Die()
+    {
+        isAlive = false;
+        head.GetComponent<Animator>().enabled = false;
+        head.isKinematic = false;
+        head.useGravity = true;
+        head.GetComponent<SphereCollider>().enabled = true;
+        head.gameObject.transform.parent = null;
+        head.velocity = new Vector3(0, 6.0f, 3.0f);
+        OnDestroy.Invoke();
+        OnDestroy.RemoveAllListeners();
+        SoundManager.Instance.PlayOneShot(SoundManager.Instance.alienDeath);
+        head.GetComponent<SelfDestruct>().Initiate();
+        if (deathParticles)
+        {
+            deathParticles.transform.parent = null;
+            deathParticles.Activate();
+        }
+        Destroy(gameObject);
+    }
+
+    public DeathParticles GetDeathParticles()
+    {
+        if (deathParticles == null)
+        {
+            deathParticles = GetComponentInChildren<DeathParticles>();
+        }
+        return deathParticles;
+    }
+
+
+
 }
+
+
+
+
+
+
+
